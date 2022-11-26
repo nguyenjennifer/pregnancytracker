@@ -15,6 +15,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
+
 </head>
 
 <body>
@@ -26,24 +27,40 @@
     <div class="global-container">
         <div class="card login-form">
             <div class="card-body">
-                <h3 class="text-center m-3">Sign In</h3>
-			<!-- <div id="signInError" class="alert alert-danger alert-dismissible fade show mb-1" role="alert">Incorrect username or password.</div> -->
+                <h3 class="text-center m-3">Create Account</h3>
+                <!-- <div id="signInError" class="alert alert-danger alert-dismissible fade show mb-1" role="alert">Incorrect username or password.</div> -->
                 <form>
-                    <div class="form-group my-3">
-                        <label>Username</label>
-                        <input id="loginUsername" type="text" class="form-control form-control-sm">
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="form-outline">
+                                <label class="form-label">First name</label>
+                                <input id="firstName" type="text" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="form-outline">
+                                <label class="form-label">Last name</label>
+                                <input id="lastName" type="text" class="form-control" />
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group my-3">
+                    <div class="form-outline mb-4">
+                        <label>Username</label>
+                        <input id="username" type="text" class="form-control">
+                    </div>
+                    <div class="form-outline mb-4">
                         <label>Password</label>
-                        <input id="loginPassword" type="password" class="form-control form-control-sm">
-                        <a href="../resetpassword/resetPassword.html" class="mt-2" style="font-size:13px;">Forgot
-                            password?</a>
+                        <input id="password" type="password" class="form-control">
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label>Confirm Password</label>
+                        <input id="confirmPassword" type="password" class="form-control">
                     </div>
                     <div class="text-center">
-                        <button id="loginSubmit" type="submit" class="btn btn-outline-dark mt-2">Sign in</button>
+                        <button id="signUpSubmit" type="submit" class="btn btn-outline-dark mt-2">Sign Up</button>
                     </div>
                     <div class="text-center pt-2">
-                        Don't have an account? <a href="../signup/signUp.html">Create One</a>
+                        Already have an account? <a href="../login/login.html">Sign In</a>
                     </div>
                 </form>
             </div>

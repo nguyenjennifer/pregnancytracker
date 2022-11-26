@@ -1,67 +1,33 @@
-
-body {
+html, body {
+    height: 100%;
     font-family: 'Poppins', sans-serif !important;
-    height: 25%;
-    margin: 0;
-    background: linear-gradient(217deg, rgba(255, 0, 221, 0.8), rgba(255,0,0,0) 50%),
+    /* background-image: radial-gradient(circle, rgba(2,0,36,1) 0%, #ffe5d4 0%, #e9a68f 95%); */
+        background: linear-gradient(217deg, rgba(255, 0, 221, 0.8), rgba(255,0,0,0) 50%),
         linear-gradient(127deg, rgba(89, 0, 255, 0.8), rgba(0,255,0,0) 50%),
         linear-gradient(336deg, rgba(0, 89, 255, 0.8), rgba(0,0,255,0) 50%);
     background-repeat: repeat;
     background-attachment: fixed;
 }
 
-.login {
-    margin-top: 48px;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
+.global-container{
+	height:100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
-.card {
-    padding: 150px 50px;
-    border: 2px solid rgba(255, 255, 255, 0.8) !important;
-    background-color: rgba(255, 255, 255, 0.1) !important;
-    color: white;
+.login-form{ 
+	width:500px;
+	margin:20px;
+    background-color: #f9f9f9;
 }
 
-input#username, input#password {
-    background-color: rgba(255, 255, 255, 0.3);
+.btn{
+    align-content: center;
 }
 
-label {
-    font-size: 18px;
-}
-
-.form-floating {
-    width: 90%;
-    border-radius: 8px !important;
-    box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 4px;
-}
-
-button#login {
-    width: 90%;
-    margin-top: 24px;
-    box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 4px;
-}
-
-.form-container {
-    border-radius: 8px;
-    box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 4px;
-    padding: 200px;
-    background-color: rgb(101, 68, 171);
-}
-
-.account-options {
-    display: flex;
-    justify-content: space-between;
-    padding: 12px 32px;
-    color: white;
-}
-
-h1 {
-    text-align: center;
-    font-size: 15px;
-    color: white;
-    text-shadow: rgba(0, 0, 0, 0.5) 0px 0px 4px;
+.alert{
+	margin-bottom:-30px;
+	font-size: 13px;
+	margin-top:20px;
 }
