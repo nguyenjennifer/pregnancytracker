@@ -9,24 +9,24 @@ html, body {
     background-attachment: fixed;
 }
 
-.global-container{
+.global-container {
 	height:100%;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 }
 
-.login-form{ 
+.login-form { 
 	width:500px;
 	margin:20px;
-    background-color: #f9f9f9;
+  background-color: #f9f9f9;
 }
 
-.btn{
-    align-content: center;
+.btn {
+  align-content: center;
 }
 
-.alert{
+.alert {
 	margin-bottom:-30px;
 	font-size: 13px;
 	margin-top:20px;
@@ -39,22 +39,26 @@ html, body {
   margin-bottom: 12px;
 }
 
-#recordsTable {
+#recordsTable, #patientSearch {
   border-collapse: collapse;
   width: 100%;
   border: 1px solid #ddd;
   font-size: 18px;
 }
 
-#recordsTable th, #recordsTable td {
+#recordsTable th, #recordsTable td,  #patientSearch th,  #patientSearch td {
   text-align: left;
   padding: 12px;
 }
 
-#recordsTable tr {
+#recordsTable tr, #patientSearch tr {
   border-bottom: 1px solid #ddd;
 }
 
-#recordsTable tr.header, #recordsTable tr:hover {
+#recordsTable tr.header, #recordsTable tr:hover, #patientSearch tr:hover {
   background-color: #f1f1f1;
+}
+
+.modal {
+  --bs-modal-width: 30vw !important;
 }
