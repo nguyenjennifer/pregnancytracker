@@ -62,3 +62,35 @@ html, body {
 .modal {
   --bs-modal-width: 30vw !important;
 }
+
+#pregnancyTable {
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid #ddd;
+  font-size: 13px;
+}
+
+#medsTable {
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid #ddd;
+  font-size: 20px;
+}
+
+#medsTable td {
+  text-align: center;
+}
+
+.infoLabel {
+  font-weight: bold;
+
+}
+
+.infoData {
+  margin-left: 5%;
+}
+
+.infoData:disabled {
+  background: white;
+  border-style: hidden;
+}
