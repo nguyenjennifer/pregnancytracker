@@ -19,21 +19,3 @@ function myFunction() {
     }
   }
 }
-
-function getDate() {
-  var today = new Date();
-  var dd = today.getDate();
-  var mm = today.getMonth()+1; //January is 0!
-  var yyyy = today.getFullYear();
-
-  today = mm + '-' + dd + '-' + yyyy;
-  
-  document.getElementById('date').value = today;
-}
-
-window.onload = function() {
-  getDate();
-};
-
-var today = new Date().toISOString().slice(0, 16);
-document.getElementsByName("ApptDate")[0].min = today;

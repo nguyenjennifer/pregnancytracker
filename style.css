@@ -51,6 +51,10 @@ html, body {
   font-size: 18px;
 }
 
+.docPortal {
+  width: 100%;
+}
+
 #recordsTable th, #recordsTable td,  #patientSearch th,  #patientSearch td {
   text-align: left;
   padding: 10px;

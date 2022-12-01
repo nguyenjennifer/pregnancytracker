@@ -1,4 +1,4 @@
-<?php include("databaseLogin.php"); session_start(); ?>
+<?php include("databaseLogin.php"); include("addPrescription.php"); session_start(); if ($_SESSION['role'] == 'Doctor' && $_SESSION['is_logged_in'] == TRUE) { ?>
 <!doctype html>
 <html lang="en">
 
@@ -43,7 +43,7 @@
                             if (sizeof($users) < 1) {
                                 echo '<p style="color: red;">Error fetching patients</p>';
                             } else {
-                                echo '<table id="patientSearch" style="text-align: center">';
+                                echo '<table class="docPortal" id="patientSearch" style="text-align: center">';
                                 echo '<tr><th>Patient</th></tr>';
                                 for ($i=0; $i < sizeof($users); $i++) {
                                     echo '<tr><td><a href="myPatient.php?id=', $users[$i]['UserID'], '">', $users[$i]['FirstName'], ' ', $users[$i]['LastName'], '</td></tr>';
@@ -111,7 +111,7 @@
                             if (sizeof($appointments) < 1) {
                                 echo '<p style="color: red;">Error fetching appointments</p>';
                             } else {
-                                echo '<table id="recordsTable" style="text-align: center">';
+                                echo '<table class="docPortal" id="recordsTable" style="text-align: center">';
                                 echo '<tr class="header"><th style="width:33%;">Date</th><th style="width:33%">Time</th><th style="width:33%;">Patient</th></tr>';
                                 for ($i=0; $i < sizeof($appointments); $i++) {
                                     if (str_contains($appointments[$i]['Doctor'], $_SESSION['lastName'])) {
@@ -137,27 +137,36 @@
                 <div class="card h-100">
                     <div class="card-body">
                         <h5 class="text-center m-3">Patient Prescription</h6>
-                        <form>
+                        <form action="addPrescription.php" method="POST">
                             <div class="form-group my-3">
                                 <label>Full Name</label>
-                                <input type="text" class="form-control form-control-sm" required>
+                                <input name="Patient" type="text" class="form-control form-control-sm" required>
+                            </div>
+                            <div class="form-group my-3">
+                                <label>Patient Date of Birth</label>
+                                <input name="BirthDate" type="date" required>
                             </div>
                             <div class="form-group my-3">
                                 <label>Prescription</label>
-                                <input type="text" class="form-control form-control-sm" required>
+                                <input name="Prescription" type="text" class="form-control form-control-sm" required>
                             </div>
                             <div class="form-group my-3">
                                 <label>Dosage</label>
-                                <input type="text" class="form-control form-control-sm" required>
+                                <input name="Dosage" type="text" class="form-control form-control-sm" required>
                             </div>
                             <div class="form-group my-3">
                                 <label for="date">Date</label>
-                                <input disabled type="text" id="date" class="form-control" required>
+                                <input name="DatePrescribed" type="date" value="<?php echo date("Y-m-d"); ?>">
                             </div>
                             <div class="form-group">
                                 <span class="form-group-text">Notes</span>
-                                <textarea class="form-control" aria-label="notes"></textarea>
+                                <textarea name="Notes" class="form-control" aria-label="notes"></textarea>
                             </div>
+                            <?php
+                                if (isset($_GET['success'])) {
+                                    echo '<p style="color: green;">', $_GET['success'], '</p>';
+                                }
+                            ?>
                             <div class="d-flex justify-content-end">
                                 <button type="submit" class="btn btn-outline-primary mt-3">Submit Prescription</button>
                             </div>
@@ -167,8 +176,14 @@
             </div>
         </div>
     </div>
+    <footer class="text-center mt-3">
+        <form action="databaseLogout.php" method="post">
+            <button name="logout" class="btn btn-outline-dark">Logout</button>
+        </form>
+    </footer>
     <script src="doctorPortal.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 </body>
 
 </html>
+<?php } else { header('location: login.php?err=Log in to view page.'); } ?>
