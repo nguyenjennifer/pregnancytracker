@@ -16,14 +16,21 @@
         print_r($users);
         if (sizeof($users) == 1) {
             $userName = $users[0]['Username'];
-            echo 'We have a user:   ', $userName;
-
             // set the session
             session_start();
             $_SESSION['username'] = $userName;
-
-            // redirect to home
-            header("location: sysAdminPortal.php");
+            $sql2 = "SELECT Role FROM USERS WHERE Username='$_POST[username]'";
+            $result = mysqli_query($conn, $sql2);
+            $role = implode(mysqli_fetch_all($result, MYSQLI_ASSOC)[0]);
+            if ($role == 'Patient') {
+                header("location: patientPortal.php");
+            } else if ($role == 'Doctor') {
+                header("location: doctorPortal.php");
+            } else if ($role == 'SystemAdmin') {
+                header("location: sysAdminPortal.php");
+            } else {
+                header("location: login.php?err= Role not assigned. Contact system administrator.");
+            }
         } else {
             echo 'User was not found!';
             header("Location: login.php?err= Incorrect username or password!");
