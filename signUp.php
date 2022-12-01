@@ -1,3 +1,4 @@
+<?php include("databaseLogin.php"); ?>
 <!doctype html>
 <html lang="en">
 
@@ -31,13 +32,13 @@
                         <div class="col-md-6 mb-4">
                             <div class="form-outline">
                                 <label class="form-label">First name</label>
-                                <input name="firstName" id="firstName" type="text" class="form-control" />
+                                <input required name="firstName" id="firstName" type="text" class="form-control" />
                             </div>
                         </div>
                         <div class="col-md-6 mb-4">
                             <div class="form-outline">
                                 <label class="form-label">Last name</label>
-                                <input name="lastName" id="lastName" type="text" class="form-control" />
+                                <input required name="lastName" id="lastName" type="text" class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -45,7 +46,7 @@
                         <div class="col-md-6 mb-4">
                             <div class="form-outline mb-1">
                                 <label>Role</label><br>
-                                <input name="role" id="rolePatient" type="radio" value="Patient">
+                                <input name="role" id="rolePatient" type="radio" value="Patient" checked="checked">
                                 <label for="rolePatient">Patient</label><br>
                                 <input name="role" id="roleDoctor" type="radio" value="Doctor">
                                 <label for="roleDoctor">Doctor</label><br>
@@ -54,19 +55,25 @@
                         <div class="col-md-6 mb-4">
                             <div class="form-outline mb-1">
                                 <label class="mb-1"> Birth Date</label><br>
-                                <input name="birthdate" type="date" id="start" value="" min="2018-01-01" max="2022-12-02">
+                                <input required name="birthdate" type="date" id="start" value="" min="1950-01-01" max="2004-31-12">
                             </div>
                         </div>
                     </div>
                     <div class="form-outline mb-4">
                         <label>Username</label>
-                        <input name="username" id="username" type="text" class="form-control">
+                        <input required name="username" id="username" type="text" class="form-control">
                     </div>
                     <div class="form-outline mb-4">
                         <label>Password</label>
-                        <input name="password" id="password" type="password" class="form-control">
+                        <input required name="password" id="password" type="password" class="form-control">
                     </div>
                     <div class="text-center">
+                        <?php
+                        if (isset($_GET['err'])) {
+                            echo '<p style="color: red;">', $_GET['err'], '</p>';
+                        }
+                        ?>
+                        <!-- Output error message if username matches existing username in database -->
                         <button id="signUpSubmit" type="submit" class="btn btn-outline-dark mt-2">Sign Up</button>
                     </div>
                     <div class="text-center pt-2">

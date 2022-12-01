@@ -1,7 +1,7 @@
     <?php
     session_start();
     // connect to SQL database
-    $conn = mysqli_connect('localhost', 'root', 'mySeeQuiL!', 'pregnancy_tracker');
+    $conn = mysqli_connect('localhost', 'root', '', 'pregnancy_tracker');
     // check to see if connection was successful or not
     if (!$conn) {
         echo 'MySQL Connection failed!' . mysqli_connect_error();
@@ -13,23 +13,26 @@
 
         // fetch  the rows as an array
         $users = mysqli_fetch_all($result, MYSQLI_ASSOC);
-
-        print_r($users);
+        
         if (sizeof($users) == 1) {
             $userName = $users[0]['Username'];
+            $lastName = $users[0]['LastName'];
+
             // set the session
-            $_SESSION['username'] = $userName;
-            $sql2 = "SELECT Role FROM USERS WHERE Username='$_POST[username]'";
-            $result = mysqli_query($conn, $sql2);
-            $role = implode(mysqli_fetch_all($result, MYSQLI_ASSOC)[0]);
-            if ($role == 'Patient') {
-                header("location: patientPortal.php");
-            } else if ($role == 'Doctor') {
-                header("location: doctorPortal.php");
-            } else if ($role == 'SystemAdmin') {
-                header("location: sysAdminPortal.php");
+            session_start();
+            $_SESSION['username'] = $users[0]['Username'];
+            $_SESSION['firstName'] = $users[0]['FirstName'];
+            $_SESSION['lastName'] = $users[0]['LastName'];
+            $_SESSION['role'] = $users[0]['Role'];
+
+
+            // redirect to home
+            if ($users[0]['Role'] == 'Patient') {
+                header('location:patientPortal.php');
+            } elseif ($users[0]['Role'] == 'Doctor') {
+                header('location:doctorPortal.php');
             } else {
-                header("location: login.php?err= Role not assigned. Contact system administrator.");
+                header('location:sysAdminPortal.php');
             }
         } else {
             echo 'User was not found!';

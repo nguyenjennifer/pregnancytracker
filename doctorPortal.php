@@ -1,3 +1,4 @@
+<?php include("databaseLogin.php"); session_start(); ?>
 <!doctype html>
 <html lang="en">
 
@@ -21,6 +22,7 @@
     <nav class="navbar navbar-light">
         <div class="container-fluid">
             <span class="h4 mb-0" style="color:#f9f9f9">Seed Tracker</span>
+            <span class="h4 mb-0" style="color:#f9f9f9">Welcome back, Doctor <?php echo $_SESSION['lastName']; ?></span>
         </div>
     </nav>
     <div class="text-center">
@@ -32,25 +34,23 @@
                 <div class="card h-100">
                     <div class="card-body">
                         <h5 class="text-center m-3">Patient Search</h6>
-                        <input type="text" id="searchBar" onkeyup="myFunction()" placeholder=" Patient Name">
-                            
-                        <table id="patientSearch" style="text-align: center">
-                            <tr>
-                                <th>Patient</th>
-                            </tr>
-                            <tr>
-                                <td><a href=#>John Doe</a></td>
-                            </tr>
-                            <tr>
-                                <td><a href=#>Albert Einstein</a></td>
-                            </tr>
-                            <tr>
-                                <td><a href=#>Justin Bieber</a></td>
-                            </tr>
-                            <tr>
-                                <td><a href=#>Marc Jacobs</a></td>
-                            </tr>
-                        </table>
+                        <?php 
+                            echo '<input type="text" id="searchBar" onkeyup="myFunction()" placeholder=" Patient Name">';
+                            $sql =  "SELECT * FROM USERS WHERE Role = 'Patient' ";
+                            $result = mysqli_query($conn, $sql);
+                            $users = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+                            if (sizeof($users) < 1) {
+                                echo '<p style="color: red;">Error fetching patients</p>';
+                            } else {
+                                echo '<table id="patientSearch" style="text-align: center">';
+                                echo '<tr><th>Patient</th></tr>';
+                                for ($i=0; $i < sizeof($users); $i++) {
+                                    echo '<tr><td><a href="myPatient.php?id=', $users[$i]['UserID'], '">', $users[$i]['FirstName'], ' ', $users[$i]['LastName'], '</td></tr>';
+                                }
+                                echo '</table>';
+                            }
+                        ?>
                     </div>
                 </div>
             </div>
@@ -58,7 +58,7 @@
                 <div class="card h-100">
                     <div class="card-body">
                         <div class="card-title" style="display: flex; justify-content: space-between; align-items: center;">
-                            <h5>Upcoming Appointments</h5>
+                            <h5>My Upcoming Appointments</h5>
                             <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#schedule">
                                 Schedule an Appointment
                             </button>
@@ -71,24 +71,28 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form>
+                                        <form action="newAppointment.php" method="POST">
                                             <div>
                                                 <label>Patient Full Name</label>
-                                                <input type="text" style="width: 100%" required>
+                                                <input name="Patient" type="text" style="width: 100%" required>
+                                            </div>
+                                            <div>
+                                                <label class="mt-4">Doctor</label>
+                                                <input name="Doctor" type="text" style="width: 100%" value="<?php echo $_SESSION['firstName'], " ", $_SESSION['lastName']; ?>">
                                             </div>
                                             <div>
                                                 <label class="mt-4">Patient Date of Birth</label>
-                                                <input type="date" required>
+                                                <input name="BirthDate" type="date" required>
                                             </div>
                                             <div>
                                                 <label class="mt-3">Select Date and Time</label>
-                                                <input type="datetime-local" name="book" required>
+                                                <input name="ApptDate" type="datetime-local" required>
                                             </div>
-                                            <div>
-                                                <label class="form-group-text mt-3">Notes</label>
-                                                <textarea class="form-control" aria-label="notes"></textarea>
+                                            <div class="form-group mt-3">
+                                                <span class="form-group-text">Notes</span>
+                                                <textarea name="Notes" class="form-control" aria-label="notes"></textarea>
                                             </div>
-                                            <div class="modal-footer">
+                                            <div class="mt-4 modal-footer">
                                                 <button type="submit" class="btn btn-outline-primary">Save</button>
                                                 <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Cancel</button>
                                             </div>
@@ -97,33 +101,35 @@
                                 </div>
                             </div>
                         </div>
-                        <table id="recordsTable">
-                            <tr class="header">
-                                <th style="width:33%;">Date</th>
-                                <th style="width:33%">Time</th>
-                                <th style="width:33%;">Patient</th>
-                            </tr>
-                            <tr>
-                                <td>11-28-2022</td>
-                                <td>1:00 PM</td>
-                                <td><a href=#>John Doe</a></td>
-                            </tr>
-                            <tr>
-                                <td>11-28-2022</td>
-                                <td>1:30 PM</td>
-                                <td><a href=#>Albert Einstein</a></td>
-                            </tr>
-                            <tr>
-                                <td>11-28-2022</td>
-                                <td>2:00 PM</td>
-                                <td><a href=#>Justin Beiber</a></td>
-                            </tr>
-                            <tr>
-                                <td>11-29-2022</td>
-                                <td>10:45 AM</td>
-                                <td><a href=#>Marc Jacobs</a></td>
-                            </tr>
-                        </table>
+
+                        <?php
+                            $sql =  "SELECT * FROM APPOINTMENTS ";
+                            $result = mysqli_query($conn, $sql);
+                            $appointments = mysqli_fetch_all($result, MYSQLI_ASSOC);
+                            $count = 0;
+
+                            if (sizeof($appointments) < 1) {
+                                echo '<p style="color: red;">Error fetching appointments</p>';
+                            } else {
+                                echo '<table id="recordsTable" style="text-align: center">';
+                                echo '<tr class="header"><th style="width:33%;">Date</th><th style="width:33%">Time</th><th style="width:33%;">Patient</th></tr>';
+                                for ($i=0; $i < sizeof($appointments); $i++) {
+                                    if (str_contains($appointments[$i]['Doctor'], $_SESSION['lastName'])) {
+                                        date_default_timezone_set("America/Los_Angeles");
+                                        $date = explode(" ", date("m-d-Y h:ia", strtotime($appointments[$i]['ApptDate'])));
+                                        if (strtotime($date[0]) > strtotime(date("m-d-Y"))) {
+                                            echo '<tr><td>', $date[0], '</td><td>', $date[1], '</td><td>', $appointments[$i]['Patient'], '</td></tr>';
+                                            $count++;
+                                        }
+                                    }
+                                }
+                                if ($count == 0) {
+                                    echo '<table id="recordsTable" style="text-align: center">';
+                                    echo '<p class="mt-4" style="text-align: center">No upcoming appointments</p>';
+                                }
+                                echo '</table>';
+                            }
+                        ?>
                     </div>
                 </div>
             </div>
@@ -138,6 +144,10 @@
                             </div>
                             <div class="form-group my-3">
                                 <label>Prescription</label>
+                                <input type="text" class="form-control form-control-sm" required>
+                            </div>
+                            <div class="form-group my-3">
+                                <label>Dosage</label>
                                 <input type="text" class="form-control form-control-sm" required>
                             </div>
                             <div class="form-group my-3">
