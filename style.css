@@ -16,6 +16,12 @@ html, body {
 	justify-content: center;
 }
 
+.global-container2 {
+  display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
 .login-form { 
 	width:500px;
 	margin:20px;
@@ -41,14 +47,13 @@ html, body {
 
 #recordsTable, #patientSearch {
   border-collapse: collapse;
-  width: 100%;
   border: 1px solid #ddd;
   font-size: 18px;
 }
 
 #recordsTable th, #recordsTable td,  #patientSearch th,  #patientSearch td {
   text-align: left;
-  padding: 12px;
+  padding: 10px;
 }
 
 #recordsTable tr, #patientSearch tr {

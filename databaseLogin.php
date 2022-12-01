@@ -1,4 +1,5 @@
     <?php
+    session_start();
     // connect to SQL database
     $conn = mysqli_connect('localhost', 'root', 'mySeeQuiL!', 'pregnancy_tracker');
     // check to see if connection was successful or not
@@ -17,7 +18,6 @@
         if (sizeof($users) == 1) {
             $userName = $users[0]['Username'];
             // set the session
-            session_start();
             $_SESSION['username'] = $userName;
             $sql2 = "SELECT Role FROM USERS WHERE Username='$_POST[username]'";
             $result = mysqli_query($conn, $sql2);
