@@ -18,62 +18,66 @@
 <body>
     <?php
     session_start();
-    $_SESSION['id'] = $_GET['id'];
+    if ($_SESSION['role'] == 'System Administrator' && $_SESSION['is_logged_in'] == TRUE) {
     ?>
-    <nav class="navbar navbar-light">
-        <div class="container-fluid">
-            <span class="h4 mb-0" style="color:#f9f9f9">Seed Tracker</span>
+        <nav class="navbar navbar-light">
+            <div class="container-fluid">
+                <span class="h4 mb-0" style="color:#f9f9f9">Seed Tracker</span>
+            </div>
+        </nav>
+        <div class="text-center">
+            <h1 style="color:#3000a0"><strong>System Administrator Portal</strong></h1>
         </div>
-    </nav>
-    <div class="text-center">
-        <h1 style="color:#3000a0"><strong>System Administrator Portal</strong></h1>
-    </div>
-    <div class="global-container2">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="text-center m-3">Edit User Account Information</h6>
-                    <form action="databaseEditUser.php" method="post">
-                        <div class="form-group my-3">
-                            <label>First Name</label>
-                            <input name="editFirstName" type="text" class="form-control form-control-sm">
-                        </div>
-                        <div class="form-group my-3">
-                            <label>Last Name</label>
-                            <input name="editLastName" type="text" class="form-control form-control-sm">
-                        </div>
-                        <div class="form-group my-3">
-                            <label>Username</label>
-                            <input name="editUserName" type="text" class="form-control form-control-sm">
-                        </div>
-                        <div class="form-group my-3">
-                            <label>Password</label>
-                            <input name="editPassword" type="password" class="form-control form-control-sm">
-                        </div>
-                        <div class="form-group my-3">
-                            <label>Role ([Patient], [Doctor], or [System Administrator])</label>
-                            <input name="editRole" type="text" class="form-control form-control-sm">
-                        </div>
-                        <div class="form-group my-3">
-                            <label>User ID</label>
-                            <?php
-                            echo '<input disabled name="editUserID" type="text" value="', $_GET['id'], '" class="form-control form-control-sm">';
-                            ?>
-                        </div>
-                        <div class="text-center">
-                            <button name="editUser" type="submit" class="btn btn-outline-dark mt-2">Save</button>
-                        </div>
-                    </form>
+        <div class="global-container2">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="text-center m-3">Edit User Account Information</h6>
+                        <form action="databaseEditUser.php" method="post">
+                            <div class="form-group my-3">
+                                <label>First Name</label>
+                                <input name="editFirstName" type="text" class="form-control form-control-sm">
+                            </div>
+                            <div class="form-group my-3">
+                                <label>Last Name</label>
+                                <input name="editLastName" type="text" class="form-control form-control-sm">
+                            </div>
+                            <div class="form-group my-3">
+                                <label>Username</label>
+                                <input name="editUserName" type="text" class="form-control form-control-sm">
+                            </div>
+                            <div class="form-group my-3">
+                                <label>Password</label>
+                                <input name="editPassword" type="password" class="form-control form-control-sm">
+                            </div>
+                            <div class="form-group my-3">
+                                <label>Role ([Patient], [Doctor], or [System Administrator])</label>
+                                <input name="editRole" type="text" class="form-control form-control-sm">
+                            </div>
+                            <div class="form-group my-3">
+                                <label>User ID</label>
+                                <?php
+                                echo '<input disabled name="editUserID" type="text" value="', $_GET['id'], '" class="form-control form-control-sm">';
+                                ?>
+                            </div>
+                            <div class="text-center">
+                                <button name="editUser" type="submit" class="btn btn-outline-dark mt-2">Save</button>
+                            </div>
+                        </form>
+                </div>
             </div>
         </div>
-    </div>
 
-    <footer class="text-center mt-3">
-        <form action="databaseLogout.php" method="post">
-            <button name="logout" class="btn btn-outline-dark">Logout</button>
-        </form>
-    </footer>
-    <script src="sysadmin.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+        <footer class="text-center mt-3">
+            <form action="databaseLogout.php" method="post">
+                <button name="logout" class="btn btn-outline-dark">Logout</button>
+            </form>
+        </footer>
+        <script src="sysadmin.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <?php
+    } else {
+        header('location: login.php?err=Log in to view page.');
+    } ?>
 </body>
 
 </html>

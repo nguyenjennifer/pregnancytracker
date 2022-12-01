@@ -13,11 +13,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 </head>
-<?php
-session_start();
-?>
 
 <body>
+<?php
+session_start();
+if ($_SESSION['role'] == 'System Administrator' && $_SESSION['is_logged_in'] == TRUE) {
+?>
     <nav class="navbar navbar-light">
         <div class="container-fluid">
             <span class="h4 mb-0" style="color:#f9f9f9">Seed Tracker</span>
@@ -32,7 +33,7 @@ session_start();
                 <div class="card h-100">
                     <div class="card-body">
                         <h5 class="text-center m-3">Create A Doctor Account</h5>
-                        <form action="createdoctor.php" method="post">
+                        <form action="databaseCreateDoctor.php" method="post">
                             <div class="form-group my-3">
                                 <label>First Name</label>
                                 <input name="doctorFirstName" type="text" class="form-control form-control-sm">
@@ -115,6 +116,10 @@ session_start();
     </footer>
     <script src="sysadmin.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+<?php
+} else {
+    header('location: login.php?err=Log in to view page.');
+}?>
 </body>
 
 </html>
