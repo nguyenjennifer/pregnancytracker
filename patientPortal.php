@@ -1,3 +1,4 @@
+<?php session_start(); if ($_SESSION['role'] == 'Patient' && $_SESSION['is_logged_in'] == TRUE) { ?>
 <!doctype html>
 <html lang="en">
 
@@ -29,8 +30,6 @@
     
 
     // set the session
-    session_start();
-    $_SESSION['username'] = "JaneDoe"; //! temp test code
     $userName = $_SESSION['username'];
 
     // Find Patient Name
@@ -243,10 +242,16 @@
             </div>
         </div>
     </div>
-
     <?php
     $conn->close();
     ?>
+    <footer class="text-center mt-3">
+        <form action="databaseLogout.php" method="post">
+            <button name="logout" class="btn btn-outline-dark">Logout</button>
+        </form>
+    </footer>
+
+    
 
     <script src="patientPortal.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
@@ -254,4 +259,4 @@
 
 </html>
 
-<!-- TODO: proper margins for the smaller columns; user information and medication; button; reassess and clean -->
+<?php } else { header('location: login.php?err=Log in to view page.'); } ?>
