@@ -29,7 +29,7 @@
 
             // redirect to home
             if ($users[0]['Role'] == 'Patient') {
-                header('location:patientPortal.php');
+                header('location:patientPortal.php?edit=0');
             } elseif ($users[0]['Role'] == 'Doctor') {
                 header('location:doctorPortal.php');
             } else {

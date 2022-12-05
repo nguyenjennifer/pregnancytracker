@@ -28,7 +28,7 @@
     if ($conn->query($sql) === TRUE) {
         echo "New record created successfully";
         // go to homepage
-        header("Location: patientPortal.php");
+        header("Location: patientPortal.php?edit=0");
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }

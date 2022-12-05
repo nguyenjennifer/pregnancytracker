@@ -47,6 +47,25 @@
     $result = mysqli_query($conn, $sql);
     $medications = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
+    // Grab Pregnancies
+    $sql =  "SELECT DueDate, BabyName FROM pregnancies WHERE PatientUsername = '$userName'; ";
+    $result = mysqli_query($conn, $sql);
+    $pregnancies = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+    // Grab Appointments
+    $sql =  "SELECT ApptDate, Doctor, Notes FROM appointments WHERE Patient = '$fullName'; ";
+    $result = mysqli_query($conn, $sql);
+    $appointments = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+    // Grab Users (Name, Age, DOB)
+    $sql =  "SELECT FirstName, LastName, BirthDate, Username FROM users WHERE Username = '$userName'; ";
+    $result = mysqli_query($conn, $sql);
+    $users = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    $firstName = $users[0]['FirstName'];
+    $lastName = $users[0]['LastName'];
+    $fullName = $firstName . ' ' . $lastName;
+    $userName = $users[0]['Username'];
+    $dob = $users[0]['BirthDate'];
 
     ?>
 
@@ -67,22 +86,32 @@
                     <div class="card-body">
                         <div class="card-title" style="display: flex; justify-content: space-between; flex-direction: column;">
                             <h5>User Information</h5>
-                            <form action="">
-                                <label class="infoLabel"> Name </label>
-                                <br>
-                                <input disabled class="infoData" id="patientName">
-                                <br>
-                                <label class="infoLabel"> Age </label>
-                                <br>
-                                <input disabled class="infoData" id="patientAge">
-                                <br>
-                                <label class="infoLabel"> D.O.B. </label>
-                                <br>
-                                <input disabled class="infoData" id="patientDOB">
-                            </form>
-                            <button type="button" class="btn btn-outline-dark" id="editInfoButton" style="margin-top: 5%;">
-                                Edit Information
-                            </button>
+                            <?php
+
+                            if ($_GET['edit'] == 1){
+                                echo '<form action="databaseUpdateInfo.php" method="post">
+                                <label class="infoLabel" style="margin-top: 1px;"> Name </label>
+                                <input class="infoData" style="margin-bottom: 1px;" name="patientName" value="', $fullName, '">
+                                <label class="infoLabel" style="margin-top: 1px;"> Username </label>
+                                <input class="infoData" style="margin-bottom: 1px;" name="userName" value="', $userName, '">
+                                <label class="infoLabel" style="margin-top: 1px;"> D.O.B. </label>
+                                <input class="infoData" style="margin-bottom: 1px;" name="patientDOB" value="', $dob, '">
+                                <input type="submit" name="Submit" id="Submit" value ="Save" style="margin-top: 5%;"> 
+                            </form>';
+                            } else {
+                            echo '
+                                <form action="patientPortal.php?edit=1" method="post">
+                                <label class="infoLabel" style="margin-top: 1px;"> Name </label>
+                                <p class="infoData" style="margin-bottom: 1px;" name="patientName">', $fullName,' </p>
+                                <label class="infoLabel" style="margin-top: 1px;"> Username </label>
+                                <p class="infoData" style="margin-bottom: 1px;" name="userName">', $userName,' </p>
+                                <label class="infoLabel" style="margin-top: 1px;"> D.O.B. </label>
+                                <p class="infoData" style="margin-bottom: 1px;" name="patientDOB">', $dob,' </p>
+                                <input type="submit" name="Submit" id="Submit" value ="Edit Info" style="margin-top: 5%;">
+                            </form> ';
+                            }
+                            ?>
+                            
                         </div>
                     </div>
                 </div>
@@ -96,22 +125,15 @@
                                 <th style="width:50%;">Expected Due Date</th>
                                 <th style="width:50%">Baby's Name</th>
                             </tr>
-                            <tr>
-                                <td>11-01-2022</td>
-                                <td>Kristel Lim</td>
-                            </tr>
-                            <tr>
-                                <td>10-30-2020</td>
-                                <td>Stacey Lim</td>
-                            </tr>
-                            <tr>
-                                <td>03-17-2018</td>
-                                <td>Monique Lim</td>
-                            </tr>
-                            <tr>
-                                <td>04-24-2016</td>
-                                <td>Maria Lim</td>
-                            </tr>
+                            <?php
+                                foreach($pregnancies as $row)
+                                {
+                                    echo "<tr>";
+                                    echo "<td>", $row['DueDate'], "</td>";
+                                    echo "<td>", $row['BabyName'], "</td>";
+                                    echo "</tr>";
+                                }
+                            ?>
                         </table>
                     </div>
                 </div>
@@ -125,34 +147,27 @@
                         <table id="recordsTable">
                             <tr class="header">
                                 <th style="width:25%;">Date</th>
-                                <th style="width:25%">Time</th>
+                                <th style="width:25%">Time (24H)</th>
                                 <th style="width:25%;">Doctor</th>
                                 <th style="width:25%;">Summary</th>
                             </tr>
-                            <tr>
-                                <td>11-28-2022</td>
-                                <td>1:00 PM</td>
-                                <td>Dr. Meredith Grey</td>
-                                <td><a href=#>Click here</a></td>
-                            </tr>
-                            <tr>
-                                <td>11-28-2022</td>
-                                <td>1:30 PM</td>
-                                <td>Dr. George O'Malley</td>
-                                <td><a href=#>Click here</a></td>
-                            </tr>
-                            <tr>
-                                <td>11-28-2022</td>
-                                <td>2:00 PM</td>
-                                <td>Dr. Cristina Yang</td>
-                                <td><a href=#>Click here</a></td>
-                            </tr>
-                            <tr>
-                                <td>11-29-2022</td>
-                                <td>10:45 AM</td>
-                                <td>Dr. Izzie Stevens</td>
-                                <td><a href=#>Click here</a></td>
-                            </tr>
+                            <?php
+                                foreach($appointments as $row)
+                                {
+                                    $dateTime = explode(" ", $row['ApptDate']);
+                                    $apptDate = $dateTime[0];
+                                    $apptTime = $dateTime[1];
+                                    $apptTime = explode(":", $apptTime);
+                                    $apptTime = $apptTime[0] . ":" . $apptTime[1];
+
+                                    echo "<tr>";
+                                    echo "<td>", $apptDate, "</td>";
+                                    echo "<td>", $apptTime, "</td>";
+                                    echo "<td>", $row['Doctor'], "</td>";
+                                    echo "<td>", $row['Notes'], "</td>";
+                                    echo "</tr>";
+                                }
+                            ?>
                         </table>
                     </div>
                 </div>
