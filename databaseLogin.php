@@ -1,4 +1,5 @@
     <?php
+    session_start();
     // connect to SQL database
     $conn = mysqli_connect('localhost', 'root', 'mySeeQuiL!', 'pregnancy_tracker');
     // check to see if connection was successful or not
@@ -12,18 +13,28 @@
 
         // fetch  the rows as an array
         $users = mysqli_fetch_all($result, MYSQLI_ASSOC);
-
-        print_r($users);
+        
         if (sizeof($users) == 1) {
             $userName = $users[0]['Username'];
-            echo 'We have a user:   ', $userName;
+            $lastName = $users[0]['LastName'];
 
             // set the session
             session_start();
-            $_SESSION['username'] = $userName;
+            $_SESSION['username'] = $users[0]['Username'];
+            $_SESSION['firstName'] = $users[0]['FirstName'];
+            $_SESSION['lastName'] = $users[0]['LastName'];
+            $_SESSION['role'] = $users[0]['Role'];
+            $_SESSION['is_logged_in'] = TRUE;
+
 
             // redirect to home
-            header("location: sysAdminPortal.php");
+            if ($users[0]['Role'] == 'Patient') {
+                header('location:patientPortal.php');
+            } elseif ($users[0]['Role'] == 'Doctor') {
+                header('location:doctorPortal.php');
+            } else {
+                header('location:sysAdminPortal.php');
+            }
         } else {
             echo 'User was not found!';
             header("Location: login.php?err= Incorrect username or password!");
