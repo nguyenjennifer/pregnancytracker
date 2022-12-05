@@ -30,7 +30,7 @@
                 <div class="card-body">
                     <h5 class="text-center m-3">
                         <?php
-                            $conn = mysqli_connect('localhost', 'root', '', 'pregnancy_tracker');
+                            $conn = mysqli_connect('localhost', 'root', 'mySeeQuiL!', 'pregnancy_tracker');
                             // check to see if connection was successful or not
                             if (!$conn) {
                                 echo 'MySQL Connection failed!' . mysqli_connect_error();
@@ -84,7 +84,7 @@
                                 echo '<div><table class="docPortal" id="recordsTable" style="text-align: center; width: 75vw>';
                                 echo '<tr class="header"><th>Date</th><th>Doctor</th><th>Notes</th></tr>';
                                 for ($i=0; $i < sizeof($appointments); $i++) {
-                                    if ($appointments[$i]['BirthDate'] == $user[0]['BirthDate'] && str_contains($appointments[$i]['Patient'], $user[0]['LastName'])) {
+                                    if (str_contains($appointments[$i]['Patient'], $user[0]['LastName'])) {
                                         date_default_timezone_set("America/Los_Angeles");
                                         $date = explode(" ", date("m-d-Y h:ia", strtotime($appointments[$i]['ApptDate'])));
                                         echo '<tr><td>', $date[0], '</td><td>', $appointments[$i]['Doctor'], '</td><td>', $appointments[$i]['Notes'], '</td></tr>';

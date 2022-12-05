@@ -1,6 +1,6 @@
 <?php
     // connect to db
-    $conn =  mysqli_connect('localhost', 'root', '', 'preg');
+    $conn =  mysqli_connect('localhost', 'root', 'mySeeQuiL!', 'pregnancy_tracker');
 
     // check connection
     if (!$conn) {
@@ -14,7 +14,6 @@
     $fullNameArr = explode (" ", $fullName);
     $firstName = $fullNameArr[0];
     $lastName = $fullNameArr[1];
-    $userName = $_POST['userName'];
     $dob = $_POST['patientDOB'];
     echo $firstName, $lastName, $dob;
 

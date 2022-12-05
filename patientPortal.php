@@ -21,7 +21,7 @@
 <body>
     <?php
     // connect to db
-    $conn =  mysqli_connect('localhost', 'root', '', 'preg');
+    $conn =  mysqli_connect('localhost', 'root', 'mySeeQuiL!', 'pregnancy_tracker');
 
     // check connection
     if (!$conn) {
@@ -91,8 +91,6 @@
                                 echo '<form action="databaseUpdateInfo.php" method="post">
                                 <label class="infoLabel" style="margin-top: 1px;"> Name </label>
                                 <input class="infoData" style="margin-bottom: 1px;" name="patientName" value="', $fullName, '">
-                                <label class="infoLabel" style="margin-top: 1px;"> Username </label>
-                                <input class="infoData" style="margin-bottom: 1px;" name="userName" value="', $userName, '">
                                 <label class="infoLabel" style="margin-top: 1px;"> D.O.B. </label>
                                 <input class="infoData" style="margin-bottom: 1px;" name="patientDOB" value="', $dob, '">
                                 <input type="submit" name="Submit" id="Submit" value ="Save" style="margin-top: 5%;"> 
@@ -102,8 +100,6 @@
                                 <form action="patientPortal.php?edit=1" method="post">
                                 <label class="infoLabel" style="margin-top: 1px;"> Name </label>
                                 <p class="infoData" style="margin-bottom: 1px;" name="patientName">', $fullName,' </p>
-                                <label class="infoLabel" style="margin-top: 1px;"> Username </label>
-                                <p class="infoData" style="margin-bottom: 1px;" name="userName">', $userName,' </p>
                                 <label class="infoLabel" style="margin-top: 1px;"> D.O.B. </label>
                                 <p class="infoData" style="margin-bottom: 1px;" name="patientDOB">', $dob,' </p>
                                 <input type="submit" name="Submit" id="Submit" value ="Edit Info" style="margin-top: 5%;">

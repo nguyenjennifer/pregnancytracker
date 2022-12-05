@@ -1,4 +1,4 @@
-<?php include("databaseLogin.php"); include("addPrescription.php"); session_start(); if ($_SESSION['role'] == 'Doctor' && $_SESSION['is_logged_in'] == TRUE) { ?>
+<?php include("databaseLogin.php"); include("addPrescription.php"); if ($_SESSION['role'] == 'Doctor' && $_SESSION['is_logged_in'] == TRUE) { ?>
 <!doctype html>
 <html lang="en">
 
@@ -117,10 +117,8 @@
                                     if (str_contains($appointments[$i]['Doctor'], $_SESSION['lastName'])) {
                                         date_default_timezone_set("America/Los_Angeles");
                                         $date = explode(" ", date("m-d-Y h:ia", strtotime($appointments[$i]['ApptDate'])));
-                                        if (strtotime($date[0]) > strtotime(date("m-d-Y"))) {
-                                            echo '<tr><td>', $date[0], '</td><td>', $date[1], '</td><td>', $appointments[$i]['Patient'], '</td></tr>';
-                                            $count++;
-                                        }
+                                        echo '<tr><td>', $date[0], '</td><td>', $date[1], '</td><td>', $appointments[$i]['Patient'], '</td></tr>';
+                                        $count++;
                                     }
                                 }
                                 if ($count == 0) {

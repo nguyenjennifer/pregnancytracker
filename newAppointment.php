@@ -1,6 +1,6 @@
 <?php
     // connect to SQL database
-    $conn = mysqli_connect('localhost', 'root', '', 'pregnancy_tracker');
+    $conn = mysqli_connect('localhost', 'root', 'mySeeQuiL!', 'pregnancy_tracker');
     // check to see if connection was successful or not
     if (!$conn) {
         echo 'MySQL Connection failed!' . mysqli_connect_error();

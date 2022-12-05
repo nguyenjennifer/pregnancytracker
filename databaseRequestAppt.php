@@ -1,6 +1,6 @@
 <?php
     // connect to db
-    $conn =  mysqli_connect('localhost', 'root', '', 'preg');
+    $conn =  mysqli_connect('localhost', 'root', 'mySeeQuiL!', 'pregnancy_tracker');
 
     // check connection
     if (!$conn) {
@@ -18,7 +18,7 @@
     $val2 = $_POST['doctorAnswer'];
     $val3 = $_POST['notesAnswer'];
     $val4 = $names[0]['FirstName'] . ' ' . $names[0]['LastName'];
-    $val5 = false;
+    $val5 = 0;
     $val6 = $names[0]['BirthDate'];
 
     $sql = "INSERT INTO `appointments` (ApptDate, Doctor, Notes, Patient, Confirmed, BirthDate) VALUES ('$val1', '$val2', '$val3', '$val4', '$val5', '$val6');";
